@@ -12,9 +12,16 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.example.individualassignment4q4p1.ui.theme.IndividualAssignment4Q4P1Theme
 
 class MainActivity : ComponentActivity() {
@@ -39,14 +46,23 @@ fun GameScreen() {
             .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
+        var ballX by remember { mutableStateOf(0f) }
+        var ballY by remember { mutableStateOf(0f) }
+        val ballRadius = 40f
+        Text(
+            text = "X: $ballX Y: $ballY",
+            color = Color.White,
+        )
+
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val radius = 40f
-            val center = Offset(size.width / 2f, size.height / 2f)
+            // If ballX/Y are 0, start in the center
+            val centerX = if (ballX == 0f) size.width / 2f else ballX
+            val centerY = if (ballY == 0f) size.height / 2f else ballY
 
             drawCircle(
-                color = Color.Green,
-                radius = radius,
-                center = center
+                color = Color.Red,
+                radius = ballRadius,
+                center = Offset(centerX, centerY)
             )
         }
     }
